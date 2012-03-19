@@ -28,3 +28,7 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
     end
   end
 end
+
+Then /I should see all of the movies/ do 
+  page.all('table#movies tbody tr').count.should == Movie.count
+end
