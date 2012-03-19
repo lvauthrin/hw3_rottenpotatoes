@@ -20,7 +20,7 @@ end
 #  "When I check the following ratings: G"
 
 When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
-  rating_list.split(' *, *').each do |rating|
+  rating_list.split(/ *, */).each do |rating|
     if (uncheck) 
       uncheck('ratings_' + rating)
     else
