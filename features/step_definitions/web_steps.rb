@@ -132,6 +132,17 @@ Then /^(?:|I )should not see \/([^\/]*)\/$/ do |regexp|
   regexp = Regexp.new(regexp)
 
   if page.respond_to? :should
+  if page.respond_to? :should
+    page.should have_no_content(text)
+  else
+    assert page.has_no_content?(text)
+  end
+end
+
+Then /^(?:|I )should not see \/([^\/]*)\/$/ do |regexp|
+  regexp = Regexp.new(regexp)
+
+  if page.respond_to? :should
     page.should have_no_xpath('//*', :text => regexp)
   else
     assert page.has_no_xpath?('//*', :text => regexp)
@@ -239,16 +250,5 @@ end
 Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
   query = URI.parse(current_url).query
   actual_params = query ? CGI.parse(query) : {}
-  expected_params = {}
-  expected_pairs.rows_hash.each_pair{|k,v| expected_params[k] = v.split(',')} 
-  
-  if actual_params.respond_to? :should
-    actual_params.should == expected_params
-  else
-    assert_equal expected_params, actual_params
-  end
-end
-
-Then /^show me the page$/ do
   save_and_open_page
 end
